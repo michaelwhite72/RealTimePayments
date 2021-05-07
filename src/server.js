@@ -31,18 +31,17 @@ app.get('*', (req, res) => {
 })
 
 app.post('/api/payment', async (req, res) => {
-
     var data = 
     {
         "sourceId": "Fake Web Payment",
         "initiatingParty": "LOCALOFFICEUS1",
-        "paymentInformationId": "1545922187435",
+        "paymentInformationId": req.body.paymentInformationId,
         "requestedExecutionDate": "2018-12-06",
         "instructedAmount": 
         {
             
             "amount": req.body.amount,
-            "currency": "USD"
+            "currency": req.body.currency
             
         },
         "paymentIdentification": 
@@ -54,7 +53,7 @@ app.post('/api/payment', async (req, res) => {
         "debtor": 
         {
             
-            "name": "Dbtr Name"
+            "name": req.body.debtor
             
         },
         "debtorAgent": 
@@ -72,7 +71,7 @@ app.post('/api/payment', async (req, res) => {
         "creditor": 
         {
             
-            "name": "Cdtr Name"
+            "name": req.body.creditor
             
         },
         "creditorAgent": 

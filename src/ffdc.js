@@ -6,7 +6,6 @@ class FFDC {
         this.token = token;
     }
     async callAPI(url, data) {
-        console.log("Sending FFDC Request");
         const headers = {
             headers: {
                 'Content-Type': 'application/json',
@@ -21,7 +20,6 @@ class FFDC {
                 throw(res);
             }
         } catch (err) {
-            console.error(err);
             throw(err);
         }; 
     }

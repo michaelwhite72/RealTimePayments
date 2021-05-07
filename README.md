@@ -134,5 +134,8 @@ Call to FFDC with the *data* and *url* **Careful this is an asyncronous function
 const result = await ffdc.callAPI(url, data);
 ```
 
+### MISC
+
+If you navigate to [localhost:8000](http://localhost:8000) you will have a sample web application that use payment APIs from FFDC.
 
 
