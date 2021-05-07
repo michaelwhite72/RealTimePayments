@@ -6,7 +6,8 @@ Simple back-end to use with [fusionfabric.cloud](https://www.fusionfabric.cloud)
 
 ## Project setup
 
-> This project has little to no dependency, it does not manage refresh token life-cycle.
+> This project has little to no dependency, it will use cache token until expiration.
+> TO BE IMPLEMENTED manage refresh token life-cycle.
 
 ### Install
 
