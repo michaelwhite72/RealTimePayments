@@ -1,0 +1,24 @@
+{
+  "name": "ffdc-simple-oauth-b2b",
+  "version": "1.0.0",
+  "description": "Simple Back-end in nodejs for B2B OAuth using FFDC",
+  "main": "build/server.js",
+  "scripts": {
+    "test": "npx nodemon --exec npx babel-node -r dotenv/config ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fusionfabric/ffdc-simple-oauth-b2b.git"
+  },
+  "keywords": [
+    "ffdc",
+    "oauth2",
+    "b2b"
+  ],
+  "author": "kepicorp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fusionfabric/ffdc-simple-oauth-b2b/issues"
+  },
+  "homepage": "https://github.com/fusionfabric/ffdc-simple-oauth-b2b#readme"
+}
