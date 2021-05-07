@@ -10,12 +10,12 @@ class FFDC {
         const headers = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+this.token
+                'Authorization': 'bearer '+this.token
             }
         }
         try {
             const res = await axios.post(url, data, headers);
-            if(res.status == '200'){
+            if(res.status < 300){
                 return(res.data);
             }else {
                 throw(res);

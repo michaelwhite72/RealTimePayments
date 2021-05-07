@@ -3,7 +3,6 @@
 
 # Build and website dir
 /build
-/dist
 
 # Ignore node dependencies
 /node_modules
