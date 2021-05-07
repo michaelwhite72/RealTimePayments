@@ -6,6 +6,7 @@ const Authenticator = require('./authenticator.js')
 const FFDC = require('./ffdc.js');
 
 const app = express();
+const B2B = new Authenticator();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(
@@ -15,7 +16,6 @@ app.use(express.static(
 
 
 app.get('/api/login', async (req, res) => {
-    const B2B = new Authenticator();
     try {
         var token = await B2B.getToken()
         res.setHeader('Content-Type', 'application/json');
@@ -31,7 +31,6 @@ app.get('*', (req, res) => {
 })
 
 app.post('/api/payment', async (req, res) => {
-    const ffdc = new FFDC("");
     var data = 
     {
         "sourceId": "Payment source system name",
@@ -90,7 +89,18 @@ app.post('/api/payment', async (req, res) => {
         
     }
     const url = "https://api.fusionfabric.cloud/payment/payment-initiation/realtime-payments/v2/us-real-time-payment/tch-rtps/initiate"
-    
+
+    if (!req.body.token) {
+        res.status(500).send("Missing token!");
+    }
+    const ffdc = new FFDC(req.body.token);
+    try {
+        const result = await ffdc.callAPI(url, data);
+
+        res.status(200).send(result);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 })
 
 app.listen(process.env.PORT || 8000, () => {
