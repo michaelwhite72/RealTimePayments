@@ -20,12 +20,35 @@ Load dependencies for the project
 npm install
 ```
 
-The list of dependencies are:
+
+### Deploy locally
+
+> Assuming you want to deploy to an existing nodejs framework like *vuejs*
+
+Copy files from ```src``` directory inside your project.
+
+Add dependencies:
 * axios
 * dotenv
 * express
 * (Dev-only) nodemon
 
+```bash
+npm install axios 
+npm install dotenv
+npm install express
+npm install --save-dev nodemon
+```
+
+Add a *start server* section in your ```package.json```
+
+```json
+  "scripts": {
+    "test": "npx nodemon --exec node -r dotenv/config ./src/server.js",
+    "run": "node -r dotenv/config ./src/server.js",
+    "build": "babel ./src --out-dir ./build"
+  }
+```
 
 ### Configure
 
