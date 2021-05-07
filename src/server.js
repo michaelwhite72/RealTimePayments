@@ -31,16 +31,17 @@ app.get('*', (req, res) => {
 })
 
 app.post('/api/payment', async (req, res) => {
+
     var data = 
     {
-        "sourceId": "Payment source system name",
+        "sourceId": "Fake Web Payment",
         "initiatingParty": "LOCALOFFICEUS1",
         "paymentInformationId": "1545922187435",
         "requestedExecutionDate": "2018-12-06",
         "instructedAmount": 
         {
             
-            "amount": 100,
+            "amount": req.body.amount,
             "currency": "USD"
             
         },
@@ -93,6 +94,7 @@ app.post('/api/payment', async (req, res) => {
     if (!req.body.token) {
         res.status(500).send("Missing token!");
     }
+    
     const ffdc = new FFDC(req.body.token);
     try {
         const result = await ffdc.callAPI(url, data);
@@ -101,6 +103,7 @@ app.post('/api/payment', async (req, res) => {
     } catch (err) {
         res.status(500).send(err);
     }
+    
 })
 
 app.listen(process.env.PORT || 8000, () => {
