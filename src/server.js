@@ -10,14 +10,14 @@ const B2B = new Authenticator();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(
-    path.resolve(__dirname, '../../dist'),
+    path.resolve(__dirname, '../dist'),
     { maxAge: '1y', etag: false})
 );
 
 
 app.get('/api/login', async (req, res) => {
     try {
-        var token = await B2B.getToken()
+        var token = await B2B.getToken();
         res.setHeader('Content-Type', 'application/json');
         //console.log(token);
         res.json(token);

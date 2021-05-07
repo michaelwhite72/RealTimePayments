@@ -20,6 +20,13 @@ Load dependencies for the project
 npm install
 ```
 
+The list of dependencies are:
+* axios
+* dotenv
+* express
+* (Dev-only) nodemon
+
+
 ### Configure
 
 Set ```.env``` file
