@@ -1,2 +1,29 @@
-<head></head>
-<body><h1>This is my website</h1></body>
+<html>
+<head>
+<title>Sample Payment Website</title>
+</head>
+<body>
+<div class="header">
+    <h1>Sample Payment Website</h1>
+</div>
+<div class="login">
+    <button onclick="getToken()">
+        Get Token!
+    </button>
+    <p id="token">No valid token</p>
+</div>
+<script>
+    async function getToken() {
+        try {
+            var result = await fetch("http://localhost:8000/api/login");
+            var res = result.json();
+            console.log(res);
+            document.getElementsById("token").innerHTML=res.token;
+        }
+        finally {
+            console.log('fetched!');
+        }
+    }
+</script>
+</body>
+</html>

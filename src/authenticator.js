@@ -37,7 +37,6 @@ class Authenticator {
                     this.expires_in = res.data.expires_in;
                     this.refresh_expires_in = res.data.refresh_expires_in;
                     this.date = Date.now();
-                    console.log(this.date);
                     var returnData = { token: res.data.access_token }
                     return(returnData);
                 }else {
