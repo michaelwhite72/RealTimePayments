@@ -4,7 +4,7 @@
   "description": "Simple Back-end in nodejs for B2B OAuth using FFDC",
   "main": "build/server.js",
   "scripts": {
-    "test": "npx nodemon --exec npx babel-node -r dotenv/config ./src/server.js",
+    "test": "npx nodemon --exec node -r dotenv/config ./src/server.js",
     "build": "babel ./src --out-dir ./build"
   },
   "repository": {

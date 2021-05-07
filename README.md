@@ -31,18 +31,21 @@ TOKEN_URL=
 PORT=A_NUMBER
 ```
 
-## Compile project
-
-Build the backend to the *build* directory
-```
-npm run build
-```
-
 ## Test and run
 
 Test back-end on configured port
 ```
 npm run test
+```
+
+## Compile project
+
+> Optionally you can compile the project with babel or any other compiler providing the right dependencies.
+> This project being as simple as possible we did not use compiler to test.
+
+Build the backend to the *build* directory
+```
+npm run build
 ```
 
 
