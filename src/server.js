@@ -1,5 +1,3 @@
-//import express from 'express'
-//import path from 'path';
 const path = require('path');
 const express = require('express');
 const Authenticator = require('./authenticator.js') 
@@ -14,13 +12,12 @@ app.use(express.static(
     path.resolve(__dirname, '../dist'),
     { maxAge: '1y', etag: false})
 );
-app.use(CORS);
+app.use(CORS());
 
 app.get('/api/login', async (req, res) => {
     try {
         var token = await B2B.getToken();
         res.setHeader('Content-Type', 'application/json');
-        //console.log(token);
         res.json(token);
     } catch(err) {
         res.status(500).send(err);

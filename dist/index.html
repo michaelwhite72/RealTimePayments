@@ -59,7 +59,7 @@
         
         <script>
             async function getToken() {
-                var result = await fetch("http://localhost:8000/api/login");
+                var result = await fetch("/api/login");
                 var res = await result.json();
                 document.getElementById("token").innerHTML=res.token;
             }
@@ -81,7 +81,7 @@
                             "Content-type": "application/json"
                         }  
                     };
-                    var result = await fetch("http://localhost:8000/api/payment", options );
+                    var result = await fetch("/api/payment", options );
                     var res = await result.json();
                     if (result.status == 200) {
                         document.getElementById("info").innerText="Infos: "+res.statusReasonAdditionalInformation;
