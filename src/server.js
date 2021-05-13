@@ -4,6 +4,7 @@ const path = require('path');
 const express = require('express');
 const Authenticator = require('./authenticator.js') 
 const FFDC = require('./ffdc.js');
+const CORS = require('cors');
 
 const app = express();
 const B2B = new Authenticator();
@@ -13,7 +14,7 @@ app.use(express.static(
     path.resolve(__dirname, '../dist'),
     { maxAge: '1y', etag: false})
 );
-
+app.use(CORS);
 
 app.get('/api/login', async (req, res) => {
     try {
