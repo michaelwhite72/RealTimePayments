@@ -29,6 +29,7 @@ app.get('*', (req, res) => {
 })
 
 app.post('/api/payment', async (req, res) => {
+    console.log("in payment");
     var data = 
     {
         "sourceId": "Fake Web Payment",
@@ -88,12 +89,12 @@ app.post('/api/payment', async (req, res) => {
     }
     const url = "https://api.fusionfabric.cloud/payment/payment-initiation/realtime-payments/v2/us-real-time-payment/tch-rtps/initiate"
 
-    if (!req.body.token) {
-        res.status(500).send("Missing token!");
-    }
-    
-    const ffdc = new FFDC(req.body.token);
     try {
+        if (!req.body.token) {
+            res.status(500).send("Missing token!");
+        }
+        
+        const ffdc = new FFDC(req.body.token);
         const result = await ffdc.callAPI(url, data);
 
         res.status(200).send(result);
@@ -103,6 +104,6 @@ app.post('/api/payment', async (req, res) => {
     
 })
 
-app.listen(process.env.PORT || 8000, () => {
-    console.log(`Server is listening on port ${process.env.PORT}`);
+app.listen(process.env.BACK_PORT || 8000, () => {
+    console.log(`Server is listening on port ${process.env.BACK_PORT}`);
 });

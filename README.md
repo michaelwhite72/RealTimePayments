@@ -61,7 +61,7 @@ CLIENT_SECRET=MyClient_Secret
 TOKEN_URL=
 
 # Server configuration
-PORT=A_NUMBER
+BACK_PORT=A_NUMBER
 ```
 
 ## Usage
@@ -106,7 +106,7 @@ const myAuth = new Authenticator();
 
 Call the method to access the token:
 ```js
-var token = await B2B.getToken();
+var token = await myAuth.getToken();
 ```
 This will return the following json:
 
