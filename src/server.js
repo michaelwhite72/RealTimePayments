@@ -19,7 +19,7 @@ app.use(CORS());
 app.get('/api/b2c/login',(req, res) => {
     // Redirecting to the right URL
     var URL = B2C.getURL();
-    res.send("Open the url <a href=\""+URL+"\"></a> in your app");
+    res.redirect(URL);
 })
 
 app.get('/api/b2b/login', async (req, res) => {
