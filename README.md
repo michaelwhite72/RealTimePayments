@@ -120,6 +120,64 @@ This will return the following json:
 }
 ```
 
+### Native OAuth B2C *authorization_code* library
+
+> Allow to get token from the id generated in FFDC.
+> Will cache token locally until expiry.
+> You will need to manage redirection on your web server
+
+Import the Authenticator library:
+```js
+const Authorization = require('./authorization.js');
+```
+
+Either specify *client_id*, *client_secret* and *token_url*
+```js
+const myAuth = new Authorization(client_id, client_secret, token_url, auth_url, callback_url);
+```
+Or it will load from ```.env``` file
+```js
+const myAuth = new Authorization();
+```
+
+Make sure you redirect to the proper url when getting login (example with express)
+```js
+app.get('/api/b2c/login',(req, res) => {
+    // Redirecting to the right URL
+    var URL = B2C.getURL();
+    res.redirect(URL);
+})
+```
+Implement the callback Method
+```js
+app.get('/callback', async (req, res) => {
+    
+    if (req.query.code) {
+        try {
+            var token = await B2C.getToken(req.query.code);
+            console.log(token);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(token);
+        } catch(err) {
+            res.status(500).send(err);
+        };   
+
+    } else {
+        res.status(500)
+        res.send("could not get authorization code");
+    }
+})
+```
+This will return the following json:
+
+```json
+{
+    token: "MY_SECRET_TOKEN"
+}
+```
+
+
+
 ### FFDC Call library
 
 > Provide token, data and url to call FFDC and manage response.
