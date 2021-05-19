@@ -77,6 +77,23 @@ Test back-end on configured port
 npm run test
 ```
 
+You can now navigate to the back-end to access APIs.
+Assuming your port was defined in ```.env``` was **8000**.
+
+For B2B just open:
+[http://localhost:8000/api/b2b/login](http://localhost:8000/api/b2b/login)
+
+And for B2C:
+[http://localhost:8000/api/b2c/login](http://localhost:8000/api/b2c/login)
+
+This will return the following json:
+
+```json
+{
+    token: "MY_SECRET_TOKEN"
+}
+```
+
 ### Compile project
 
 > Optionally you can compile the project with babel or any other compiler providing the right dependencies.
