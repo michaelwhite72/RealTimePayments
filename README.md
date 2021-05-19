@@ -1,4 +1,4 @@
-# FFDC OAuth2 Back-end for B2B
+# FFDC OAuth2 Back-end for B2B and B2C
 
 Simple back-end to use with [fusionfabric.cloud](https://www.fusionfabric.cloud) [api](https://developer.fusionfabric.cloud)
 This will serve any front-end or web pages disposed in the ```dist``` folder as well.
@@ -9,7 +9,7 @@ This will serve any front-end or web pages disposed in the ```dist``` folder as 
 > This project has little to no dependency, it will use cache token until expiration.
 > The project will also serve any website put in the ```dist``` folder.
 > That allow simple integration to existing *vuejs* or any other framework project.
-> TO BE IMPLEMENTED manage refresh token life-cycle.
+> Token Lifecycle is manage we need to add REFRESH system.
 
 ### Install
 
@@ -56,9 +56,13 @@ Set ```.env``` file
 
 ```bash
 # FFDC Related details
-CLIENT_ID=MyClient_ID
-CLIENT_SECRET=MyClient_Secret
-TOKEN_URL=
+CLIENT_ID_B2C=
+CLIENT_SECRET_B2C=
+CLIENT_ID_B2B=
+CLIENT_SECRET_B2B=
+TOKEN_URL=https://api.fusionfabric.cloud/login/v1/sandbox/oidc/token
+AUTH_URL=https://api.fusionfabric.cloud/login/v1/sandbox/oidc/authorize
+CALLBACK_URL=http://localhost:8000/callback
 
 # Server configuration
 BACK_PORT=A_NUMBER

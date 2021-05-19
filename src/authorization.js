@@ -3,29 +3,44 @@
 const axios = require('axios');
 const qs = require('qs');
 
-class Authenticator {
-    constructor(client, secret, token) {
-        this.client = process.env.CLIENT_ID_B2B || client;
-        this.secret = process.env.CLIENT_SECRET_B2B || secret;
-        this.tokenurl = process.env.TOKEN_URL || token;
+
+class Authorization {
+    constructor(client_id, client_secret, token_url, auth_url, callback_url) {
+        this.client = process.env.CLIENT_ID_B2B || client_id;
+        this.secret = process.env.CLIENT_SECRET_B2B || client_secret;
+        this.tokenurl = process.env.TOKEN_URL || token_url;
+        this.authurl = process.env.AUTH_URL || auth_url;
+        this.callback = process.env.CALLBACK_URL || callback_url;
         this.date = Date.now();
         this.expires_in = -1;
         this.token = "empty";
         console.log("Initiate autentication with client_id: "+this.client+"\nToken URL: "+this.tokenurl);
     }
 
-    async getToken() {
+    getURL() {
+        var myurl = this.authurl+"?client_id="+
+            this.client+"&response_type=code"+
+            "&redirect_uri="+ encodeURI(this.callback);
+        return myurl;
+    }
+
+    
+    async getToken(code) {
         const headers = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
-        }
+        };
+        
         const data = qs.stringify({
-            'grant_type' : 'client_credentials',
+            'grant_type' : 'authorization_code',
             'client_id' : this.client,
-            'client_secret' : this.secret
+            'client_secret' : this.secret,
+            'code': code,
+            'redirect_uri': this.callback
         });
         //console.log("curTime: "+Date.now()+"\noldTime: "+this.date+"\nexpires: "+this.expires_in*1000);
+        
         var curTime = this.date + this.expires_in*1000;
         if (curTime < Date.now()) {
             try {
@@ -43,7 +58,7 @@ class Authenticator {
                     throw(res);
                 }
             } catch (err) {
-                console.error(err);
+                console.error(err.message);
                 throw(err);
             }; 
         } else {
@@ -51,8 +66,7 @@ class Authenticator {
             var returnData = { token: this.token }
             return(returnData);
         }
-        
     }
 }
 
-module.exports = Authenticator;
+module.exports = Authorization;
