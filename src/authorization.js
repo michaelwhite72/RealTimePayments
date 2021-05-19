@@ -31,7 +31,7 @@ class Authorization {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         };
-        console.log(code);
+        
         const data = qs.stringify({
             'grant_type' : 'authorization_code',
             'client_id' : this.client,
@@ -39,13 +39,12 @@ class Authorization {
             'code': code,
             'redirect_uri': this.callback
         });
-        console.log(data);
         //console.log("curTime: "+Date.now()+"\noldTime: "+this.date+"\nexpires: "+this.expires_in*1000);
         
         var curTime = this.date + this.expires_in*1000;
         if (curTime < Date.now()) {
             try {
-                console.log("Fetching token");
+                //console.log("Fetching token");
                 const res = await axios.post(this.tokenurl, data, headers);
                 if(res.status == '200'){
                     this.token = res.data.access_token;

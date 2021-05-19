@@ -4,7 +4,6 @@ const Authenticator = require('./authenticator.js');
 const Authorization = require('./authorization.js');
 const FFDC = require('./ffdc.js');
 const CORS = require('cors');
-const open = require('open');
 
 const app = express();
 const B2B = new Authenticator();
@@ -18,8 +17,9 @@ app.use(express.static(
 app.use(CORS());
 
 app.get('/api/b2c/login',(req, res) => {
-    // Redirecting to 
-    open(B2C.getURL());
+    // Redirecting to the right URL
+    var URL = B2C.getURL();
+    res.send("Open the url <a href=\""+URL+"\"></a> in your app");
 })
 
 app.get('/api/b2b/login', async (req, res) => {
