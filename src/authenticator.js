@@ -10,6 +10,7 @@ class Authenticator {
         this.tokenurl = process.env.TOKEN_URL || token;
         this.date = Date.now();
         this.expires_in = -1;
+        this.refresh_expires_in = -1;
         this.token = "empty";
         console.log("Initiate autentication with client_id: "+this.client+"\nToken URL: "+this.tokenurl);
     }
@@ -29,7 +30,7 @@ class Authenticator {
         var curTime = this.date + this.expires_in*1000;
         if (curTime < Date.now()) {
             try {
-                //console.log("Fetching token");
+                console.log("Fetching token");
                 const res = await axios.post(this.tokenurl, data, headers);
                 if(res.status == '200'){
                     this.token = res.data.access_token;
@@ -37,13 +38,14 @@ class Authenticator {
                     this.expires_in = res.data.expires_in;
                     this.refresh_expires_in = res.data.refresh_expires_in;
                     this.date = Date.now();
-                    var returnData = { token: res.data.access_token }
+                    var returnData = { token: this.token, refresh_token: this.refresh_token }
+                    //var returnData = { token: res.data.access_token }
                     return(returnData);
                 }else {
                     throw(res);
                 }
             } catch (err) {
-                console.error(err);
+                console.error(err.message);
                 throw(err);
             }; 
         } else {
@@ -52,6 +54,21 @@ class Authenticator {
             return(returnData);
         }
         
+    }
+    async refreshToken() {
+        if(this.refresh_token) {
+            const headers = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }
+            const data = qs.stringify({
+                'grant_type' : 'refresh_token',
+                'refresh_token' : this.refresh_token,
+                'client_id': this.client_id,
+                'client_secret': this.client_secret
+            });
+        }
     }
 }
 

@@ -13,6 +13,7 @@ class Authorization {
         this.callback = process.env.CALLBACK_URL || callback_url;
         this.date = Date.now();
         this.expires_in = -1;
+        this.refresh_expires_in = -1;
         this.token = "empty";
         console.log("Initiate autentication with client_id: "+this.client+"\nToken URL: "+this.tokenurl);
     }
