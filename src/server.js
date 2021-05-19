@@ -1,11 +1,14 @@
 const path = require('path');
 const express = require('express');
-const Authenticator = require('./authenticator.js') 
+const Authenticator = require('./authenticator.js');
+const Authorization = require('./authorization.js');
 const FFDC = require('./ffdc.js');
 const CORS = require('cors');
+const open = require('open');
 
 const app = express();
 const B2B = new Authenticator();
+const B2C = new Authorization();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(
@@ -14,7 +17,12 @@ app.use(express.static(
 );
 app.use(CORS());
 
-app.get('/api/login', async (req, res) => {
+app.get('/api/b2c/login',(req, res) => {
+    // Redirecting to 
+    open(B2C.getURL());
+})
+
+app.get('/api/b2b/login', async (req, res) => {
     try {
         var token = await B2B.getToken();
         res.setHeader('Content-Type', 'application/json');
@@ -24,9 +32,29 @@ app.get('/api/login', async (req, res) => {
     };   
 })
 
+
+app.get('/callback', async (req, res) => {
+    
+    if (req.query.code) {
+        try {
+            var token = await B2C.getToken(req.query.code);
+            console.log(token);
+            res.setHeader('Content-Type', 'application/json');
+            res.json(token);
+        } catch(err) {
+            res.status(500).send(err);
+        };   
+
+    } else {
+        res.status(500)
+        res.send("could not get authorization code");
+    }
+})
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../dist/index.html'));
 })
+
 
 app.post('/api/payment', async (req, res) => {
     console.log("in payment");

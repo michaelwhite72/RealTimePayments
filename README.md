@@ -56,9 +56,13 @@ Set ```.env``` file
 
 ```bash
 # FFDC Related details
-CLIENT_ID=MyClient_ID
-CLIENT_SECRET=MyClient_Secret
-TOKEN_URL=
+CLIENT_ID_B2C=
+CLIENT_SECRET_B2C=
+CLIENT_ID_B2B=
+CLIENT_SECRET_B2B=
+TOKEN_URL=https://api.fusionfabric.cloud/login/v1/sandbox/oidc/token
+AUTH_URL=https://api.fusionfabric.cloud/login/v1/sandbox/oidc/authorize
+CALLBACK_URL=http://localhost:8000/callback
 
 # Server configuration
 BACK_PORT=A_NUMBER
