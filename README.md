@@ -1,5 +1,7 @@
 # FFDC OAuth2 Back-end for B2B and B2C
 
+> Update to latest version to prevent security flaws
+
 Simple back-end to use with [fusionfabric.cloud](https://www.fusionfabric.cloud) [api](https://developer.fusionfabric.cloud)
 This will serve any front-end or web pages disposed in the ```dist``` folder as well.
 [Contact Author](mailto:pierre.quemard@finastra.com)
