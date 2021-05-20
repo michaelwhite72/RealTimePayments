@@ -37,8 +37,8 @@ class Authenticator {
                 this.expires_in = res.data.expires_in;
                 this.refresh_expires_in = res.data.refresh_expires_in;
                 this.date = Date.now();
-                var returnData = { token: this.token, refresh_token: this.refresh_token }
-                //var returnData = { token: res.data.access_token }
+                //var returnData = { token: this.token, refresh_token: this.refresh_token }
+                var returnData = { token: res.data.access_token }
                 return(returnData);
             }else {
                 throw(res);
@@ -56,11 +56,12 @@ class Authenticator {
         var tokTime = this.date + this.expires_in*1000;
         var curTime = Date.now();
         var refreshTime = this.date + this.refresh_expires_in*1000;
-        if (tokTime > curTime && refreshTime > curTime) {
+        if (tokTime < curTime && refreshTime > curTime) {
             return await this.refreshToken();
         } else if (curTime >= refreshTime) {
             return await this.newToken();
         } else {
+            // curtime < Token expiry time
             //console.log('Using existing token');
             var returnData = { token: this.token }
             return(returnData);

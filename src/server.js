@@ -43,17 +43,6 @@ app.get('/refresh', async (req, res) => {
 })
 
 
-app.get('/api/b2b/login', async (req, res) => {
-    try {
-        var token = await B2B.getToken();
-        res.setHeader('Content-Type', 'application/json');
-        res.json(token);
-    } catch(err) {
-        res.status(500).send(err);
-    };   
-})
-
-
 app.get('/callback', async (req, res) => {
     if (req.query.code) {
         try {

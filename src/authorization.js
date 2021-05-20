@@ -30,7 +30,7 @@ class Authorization {
         var tokTime = this.date + this.expires_in*1000;
         var curTime = Date.now();
         var refreshTime = this.date + this.refresh_expires_in*1000;
-        if (tokTime > curTime && refreshTime > curTime) {
+        if (tokTime < curTime && refreshTime > curTime) {
             return await this.refreshToken();
         } else if (curTime >= refreshTime) {
             return await this.newToken(code);
