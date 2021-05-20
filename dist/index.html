@@ -59,7 +59,7 @@
         
         <script>
             async function getToken() {
-                var result = await fetch("/api/login");
+                var result = await fetch("/api/b2b/login");
                 var res = await result.json();
                 document.getElementById("token").innerHTML=res.token;
             }
