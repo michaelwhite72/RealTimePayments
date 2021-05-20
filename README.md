@@ -77,7 +77,7 @@ BACK_PORT=A_NUMBER
 
 Test back-end on configured port
 ```
-npm run test
+npm run dev
 ```
 
 You can now navigate to the back-end to access APIs.
@@ -102,10 +102,8 @@ This will return the following json:
 > Optionally you can compile the project with babel or any other compiler providing the right dependencies.
 > This project being as simple as possible we did not use compiler to test.
 
-Build the backend to the *build* directory
-```
-npm run build
-```
+Build the back-end to the *dist* directory
+
 
 ## Libraries
 
