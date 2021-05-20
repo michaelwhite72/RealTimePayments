@@ -6,8 +6,8 @@ const qs = require('qs');
 
 class Authorization {
     constructor(client_id, client_secret, token_url, auth_url, callback_url) {
-        this.client = process.env.CLIENT_ID_B2B || client_id;
-        this.secret = process.env.CLIENT_SECRET_B2B || client_secret;
+        this.client = process.env.CLIENT_ID_B2C || client_id;
+        this.secret = process.env.CLIENT_SECRET_B2C || client_secret;
         this.tokenurl = process.env.TOKEN_URL || token_url;
         this.authurl = process.env.AUTH_URL || auth_url;
         this.callback = process.env.CALLBACK_URL || callback_url;
@@ -27,9 +27,12 @@ class Authorization {
 
     
     async getToken(code) {
+        var buff = Buffer.from(this.client+":"+this.secret, 'utf-8');
+        var base64 = buff.toString('base64');
         const headers = {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic '+base64
             }
         };
         
@@ -66,6 +69,22 @@ class Authorization {
             //console.log("Using local token");
             var returnData = { token: this.token }
             return(returnData);
+        }
+    }
+    async refreshToken() {
+        var buff = Buffer.from(this.client+":"+this.secret, 'utf-8');
+        var base64 = buff.toString('base64');
+        if(this.refresh_token) {
+            const headers = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic '+base64
+                }
+            }
+            const data = qs.stringify({
+                'grant_type' : 'refresh_token',
+                'refresh_token' : this.refresh_token
+            });
         }
     }
 }

@@ -16,15 +16,16 @@ class Authenticator {
     }
 
     async getToken() {
+        var buff = Buffer.from(this.client+":"+this.secret, 'utf-8');
+        var base64 = buff.toString('base64');
         const headers = {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Basic '+base64
             }
         }
         const data = qs.stringify({
-            'grant_type' : 'client_credentials',
-            'client_id' : this.client,
-            'client_secret' : this.secret
+            'grant_type' : 'client_credentials'
         });
         //console.log("curTime: "+Date.now()+"\noldTime: "+this.date+"\nexpires: "+this.expires_in*1000);
         var curTime = this.date + this.expires_in*1000;
@@ -56,17 +57,18 @@ class Authenticator {
         
     }
     async refreshToken() {
+        var buff = Buffer.from(this.client+":"+this.secret, 'utf-8');
+        var base64 = buff.toString('base64');
         if(this.refresh_token) {
             const headers = {
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic '+base64
                 }
             }
             const data = qs.stringify({
                 'grant_type' : 'refresh_token',
-                'refresh_token' : this.refresh_token,
-                'client_id': this.client_id,
-                'client_secret': this.client_secret
+                'refresh_token' : this.refresh_token
             });
         }
     }
