@@ -11,7 +11,8 @@ This will serve any front-end or web pages disposed in the ```dist``` folder as 
 > This project has little to no dependency, it will use cache token until expiration.
 > The project will also serve any website put in the ```dist``` folder.
 > That allow simple integration to existing *vuejs* or any other framework project.
-> Token Lifecycle is manage we need to add REFRESH system.
+> Full token life-cycle management
+> Base64 encoding of client and secrets
 
 ### Install
 
