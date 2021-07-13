@@ -44,6 +44,7 @@ app.get('/refresh', async (req, res) => {
 
 
 app.get('/callback', async (req, res) => {
+    console.log(req.query);
     if (req.query.code) {
         try {
             var token = await B2C.getToken(req.query.code);
@@ -129,12 +130,12 @@ app.post('/api/payment', async (req, res) => {
     try {
         if (!req.body.token) {
             res.status(500).send("Missing token!");
-        }
-        
-        const ffdc = new FFDC(req.body.token);
-        const result = await ffdc.callAPI(url, data);
+        }else {
+            const ffdc = new FFDC(req.body.token);
+            const result = await ffdc.callAPI(url, data);
 
-        res.status(200).send(result);
+            res.status(200).send(result);
+        }
     } catch (err) {
         res.status(500).send(err);
     }
