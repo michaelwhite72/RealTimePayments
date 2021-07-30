@@ -23,6 +23,26 @@ class FFDC {
       throw err;
     }
   }
+
+  async callAPIGet(url) {
+    const headers = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "bearer " + this.token,
+      },
+    };
+    try {
+      const res = await axios.get(url, headers);
+      console.log(res.data);
+      if (res.status < 300) {
+        return res.data;
+      } else {
+        throw res;
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 module.exports = FFDC;
