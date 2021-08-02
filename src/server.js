@@ -238,7 +238,7 @@ app.post("/api/initiate-payment-request", async (req, res) => {
 // Transaction Search - Payment Request by Debtor Account
 app.get("/api/transaction-search-debtorID", async (req, res) => {
   console.log("initial transaction");
-  res.json({ msg: "Payments Transaction request in progress" });
+  // res.json({ msg: "Payments Transaction request in progress" });
   const url =
     "https://api.fusionfabric.cloud/payment/operations/search/v1/payment-request?transactionType=RequestForPayment&debtorAccount=1919191919";
 
