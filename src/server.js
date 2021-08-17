@@ -135,7 +135,7 @@ app.post("/api/initiate-payment-request", async (req, res) => {
     },
     CdtrPmtActvtnReq: {
       GrpHdr: {
-        MsgId: "1506926089717",
+        MsgId: "1506926089718",
         CreDtTm: "2016-11-08T13:21:00.941",
         NbOfTxs: "1",
         InitgPty: {

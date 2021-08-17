@@ -1,5 +1,7 @@
 # Local env file with secret
 .env
+.env.sandbox
+.env.uat
 
 # Build and website dir
 /build
