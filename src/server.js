@@ -125,25 +125,26 @@ app.post("/api/payment", async (req, res) => {
 // Payment Request -- ISO20022 v2
 app.post("/api/initiate-payment-request", async (req, res) => {
   console.log("payment request initiated");
+  console.log(req.body.pmtInfoId);
   var paymentRequestInitiate = {
     InitiationContext: {
       id: "real_time",
       subId: "string",
       schmeNm: "TCH_RTPS",
       saveOnError: true,
-      sourceId: "string",
+      sourceId: "FEEDER_TCH",
     },
     CdtrPmtActvtnReq: {
       GrpHdr: {
-        MsgId: "1506926089718",
-        CreDtTm: "2016-11-08T13:21:00.941",
+        MsgId: req.body.pmtInfoId,
+        CreDtTm: `${req.body.date}T13:21:00.941`,
         NbOfTxs: "1",
         InitgPty: {
           Id: {
             OrgId: {
               Othr: [
                 {
-                  Id: "777777777",
+                  Id: "020010001",
                 },
               ],
             },
@@ -152,31 +153,33 @@ app.post("/api/initiate-payment-request", async (req, res) => {
       },
       PmtInf: [
         {
-          PmtInfId: "1506926089717",
+          PmtInfId: req.body.pmtInfoId,
           PmtMtd: "TRF",
-          ReqdExctnDt: "2016-08-28",
+          ReqdExctnDt: req.body.date,
           Dbtr: {
             Nm: req.body.dbtrNm,
           },
           DbtrAcct: {
             Id: {
               Othr: {
-                Id: "1919191919",
+                Id: "745521145",
               },
             },
           },
           DbtrAgt: {
             FinInstnId: {
               ClrSysMmbId: {
-                MmbId: "020010001",
+                MmbId: "131000000",
               },
             },
           },
           CdtTrfTx: [
             {
               PmtId: {
-                InstrId: "1506926089717",
-                EndToEndId: "1506926089717",
+                // InstrId: "1506926089718",
+                // EndToEndId: "1506926089718",
+                InstrId: req.body.pmtInfoId,
+                EndToEndId: req.body.pmtInfoId,                        
               },
               PmtTpInf: {
                 SvcLvl: {
@@ -201,12 +204,12 @@ app.post("/api/initiate-payment-request", async (req, res) => {
                 },
               },
               Cdtr: {
-                Nm: "NPP CR test ACC",
+                Nm: "Maine Seafood",
               },
               CdtrAcct: {
                 Id: {
                   Othr: {
-                    Id: "745521145",
+                    Id: "112233445",
                   },
                 },
               },
@@ -232,6 +235,7 @@ app.post("/api/initiate-payment-request", async (req, res) => {
     res.status(200).send(result);
   } catch (err) {
     res.status(500).send(err);
+    console.log(err);
   }
 });
 
