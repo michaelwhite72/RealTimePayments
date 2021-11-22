@@ -65,35 +65,38 @@ app.get("/callback", async (req, res) => {
   }
 });
 
-// POST PAYMENT to GPP
-app.post("/api/payment", async (req, res) => {
-  console.log("in payment");
+// POST PAYMENT to GPP from Payment Request
+app.post("/api/make-payment", async (req, res) => {
+  console.log("Making Payment");
+  console.log(req.body.paymentId);
+  console.log(req.body.date)
   var data = {
     sourceId: "Fake Web Payment - RTP App",
     initiatingParty: "LOCALOFFICEUS1",
     // MEMO field
-    paymentInformationId: req.body.paymentInformationId,
-    requestedExecutionDate: req.body.executionDate,
+    paymentInformationId: `PMNT${req.body.paymentId}`,
+    requestedExecutionDate: `${req.body.date}`,
     instructedAmount: {
       // USER SETTABLE AMOUNT FIELD
-      amount: req.body.amount,
+      amount: req.body.amt,
       // CURENCY FIELD
       currency: "USD",
     },
     paymentIdentification: {
-      endToEndId: req.body.paymentInformationId,
+      // endToEndId: req.body.paymentInformationId,
+      endToEndId: req.body.paymentId,
     },
     debtor: {
-      name: "First American",
+      name: "Lobster Shack",
     },
     debtorAgent: {
       identification: "020010001",
     },
     debtorAccountId: {
-      identification: "276395636",
+      identification: "745521145",
     },
     creditor: {
-      name: req.body.creditor,
+      name: "Maine Seafood",
     },
     creditorAgent: {
       // 131000000 - Bank of America *or* 000000007 - CitiBank
@@ -101,9 +104,9 @@ app.post("/api/payment", async (req, res) => {
     },
     creditorAccountId: {
       // HARDCODED FOR RTP APP
-      identification: req.body.creditorAccountId,
+      identification: "1111111111",
     },
-    remittanceInformationUnstructured: req.body.memo,
+    remittanceInformationUnstructured: `RmtInf${req.body.paymentId}`,
   };
   const url =
     "https://api.fusionfabric.cloud/payment/payment-initiation/realtime-payments/v2/us-real-time-payment/tch-rtps/initiate";
@@ -119,6 +122,7 @@ app.post("/api/payment", async (req, res) => {
     res.status(200).send(result);
   } catch (err) {
     res.status(500).send(err);
+    console.log(err);
   }
 });
 
@@ -169,7 +173,7 @@ app.post("/api/initiate-payment-request", async (req, res) => {
           DbtrAgt: {
             FinInstnId: {
               ClrSysMmbId: {
-                MmbId: "131000000",
+                MmbId: "020010001",
               },
             },
           },
@@ -209,7 +213,7 @@ app.post("/api/initiate-payment-request", async (req, res) => {
               CdtrAcct: {
                 Id: {
                   Othr: {
-                    Id: "112233445",
+                    Id: "1111111111",
                   },
                 },
               },
